@@ -4,7 +4,7 @@
 
 ## Stack (decided)
 
-Java with Gradle and Spring Boot (backend), Python (upstream collector), Vite.js with React and TypeScript (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (only database), Nginx (reverse proxy), Docker.
+Java with Gradle and Spring Boot (backend), Python (upstream collector), Vite.js with React and TypeScript (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (main database), Redis (JWT blacklist only, `decisions/0012-redis-token-blacklist.md`), Nginx (reverse proxy), Docker.
 
 ## Diagram
 
@@ -35,11 +35,13 @@ flowchart LR
     MATCH[/Impact matcher<br/>TBD/]
     NOTIFY[/Notifier<br/>TBD/]
     PG[(PostgreSQL)]
+    REDIS[(Redis<br/>JWT blacklist)]
     VENDOR([Third-party API vendors<br/>specs, changelogs])
 
     User --> NGINX --> UI
     NGINX --> API
     UI -. calls .-> API
+    API -- "revoked tokens" --> REDIS
 
     %% Input paths (hybrid)
     API -- "1 Declare: write directly" --> PG

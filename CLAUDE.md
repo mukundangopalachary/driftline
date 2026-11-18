@@ -13,7 +13,7 @@ API changelog watcher. Watches third-party APIs a team depends on, diffs their s
 - Java: API, scan service (worker), aggregator, and the rest of the backend. Built with Gradle (`docs/decisions/0001-gradle-java-build-tool.md`). Spring Boot (`docs/decisions/0005-spring-boot.md`), latest versions, JPA (`0010`). Auth is GitHub OAuth (`0006`, plain OAuth app `0011`) with JWT (`0009`). Migrations: Flyway (`0007`)
 - Python: upstream collector only
 - Vite.js with React and TypeScript: frontend (`docs/decisions/0002-react-frontend-framework.md`, `0008`)
-- PostgreSQL: only database
+- PostgreSQL: main database. Redis: JWT blacklist only (`0012`)
 - RabbitMQ: scan jobs. Kafka: runtime events (stage 6, later)
 - Nginx reverse proxy, Docker
 
@@ -22,7 +22,8 @@ API changelog watcher. Watches third-party APIs a team depends on, diffs their s
 - Usage detection is hybrid, built in stages: declare, then repo scan, then runtime observation
 - Runtime path uses a separate aggregator service, not the scan service
 - CVE catalog is a non-goal
-- Postgres only. No second datastore until a measured problem needs one
+- Postgres is the system of record. No further datastore until a measured problem needs one. One exception, chosen by the owner: Redis for the JWT blacklist only (`docs/decisions/0012-redis-token-blacklist.md`)
+- Schema conventions: `docs/decisions/0013-schema-conventions.md`. Frontend stack: `docs/decisions/0014-frontend-stack.md`
 - Monorepo, one folder per service: `api/`, `scan/`, `aggregator/`, `collector/`, `web/`. Compose and `nginx/` at root (`docs/decisions/0004-monorepo.md`)
 
 ## Working rules

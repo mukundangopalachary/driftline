@@ -8,8 +8,15 @@
 
 After GitHub login (see `0006-github-oauth-auth.md`), the API issues JWTs for authenticated requests.
 
+Added later the same day (owner):
+- Refresh tokens are supported.
+- Tokens can be revoked.
+- A blacklist of revoked tokens is kept, in Redis (see `0012-redis-token-blacklist.md`).
+
 ## Not decided here
 
-- Token lifetime, refresh strategy, revocation
-- Where the browser stores the token (httpOnly cookie vs other)
+- Access and refresh token lifetimes
+- Where refresh tokens are persisted (Postgres, Redis, or both) and whether they rotate on use
+- Where the browser stores tokens (httpOnly cookie vs other)
 - Signing algorithm and key management
+- What triggers revocation (logout, password-less so no reset, suspected compromise, user deletion)
