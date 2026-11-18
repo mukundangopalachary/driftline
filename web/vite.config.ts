@@ -10,7 +10,13 @@ export default defineConfig({
     proxy: {
       // Same-origin calls to the API in dev, like Nginx will do later.
       // Cookie auth and CSRF (decisions/0009) rely on same-origin requests.
-      '/api': 'http://localhost:8082',
+      '/api': {
+        target: 'http://localhost:8082',
+        // Keep the browser's host (localhost:5173) and tell the API about it. The API builds the GitHub
+        // callback URL from it, and the callback must come back through this same origin.
+        changeOrigin: false,
+        xfwd: true,
+      },
     },
   },
   test: {

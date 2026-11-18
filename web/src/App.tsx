@@ -1,6 +1,34 @@
 import { Link, Route, Routes } from 'react-router'
+import { useCurrentUser, useLogout } from './auth/useAuth.ts'
 import HomePage from './pages/HomePage.tsx'
 import LoginPage from './pages/LoginPage.tsx'
+
+function UserMenu() {
+  const { data: user, isPending } = useCurrentUser()
+  const logout = useLogout()
+
+  if (isPending) return null
+  if (!user) {
+    return (
+      <Link to="/login" className="text-sm text-slate-600 hover:text-slate-900">
+        Sign in
+      </Link>
+    )
+  }
+  return (
+    <div className="flex items-center gap-3 text-sm">
+      <span className="text-slate-700">{user.githubLogin}</span>
+      <button
+        type="button"
+        onClick={() => logout.mutate()}
+        disabled={logout.isPending}
+        className="text-slate-600 hover:text-slate-900 disabled:opacity-50"
+      >
+        Sign out
+      </button>
+    </div>
+  )
+}
 
 export default function App() {
   return (
@@ -10,9 +38,7 @@ export default function App() {
           <Link to="/" className="font-semibold">
             Driftline
           </Link>
-          <Link to="/login" className="text-sm text-slate-600 hover:text-slate-900">
-            Sign in
-          </Link>
+          <UserMenu />
         </nav>
       </header>
       <main className="mx-auto max-w-5xl px-4 py-8">
