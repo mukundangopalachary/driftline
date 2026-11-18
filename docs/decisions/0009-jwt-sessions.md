@@ -33,7 +33,7 @@ The access token only lives 1 day, so by day 7 it has already expired. Blacklist
 
 ## Not decided here
 
-- Signing algorithm and key management (options given to the owner, awaiting choice)
+- Key rotation scheme (signing is decided: ES256 with Docker secrets, see `0015-jwt-es256-docker-secrets.md`)
 - Whether refresh tokens rotate on use
 - Refresh token format (random opaque value vs JWT) and whether stored hashed
 - Where the browser stores tokens (httpOnly cookie vs other)
