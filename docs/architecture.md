@@ -4,7 +4,7 @@
 
 ## Stack (decided)
 
-Java with Gradle and Spring Boot (backend), Python (upstream collector), Vite.js with React (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (only database), Nginx (reverse proxy), Docker.
+Java with Gradle and Spring Boot (backend), Python (upstream collector), Vite.js with React and TypeScript (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (only database), Nginx (reverse proxy), Docker.
 
 ## Diagram
 

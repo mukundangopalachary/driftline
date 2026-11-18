@@ -66,8 +66,8 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 - Basic CI: build, test, lint
 
 **Decisions needed**
-- ~~Auth approach~~ decided: GitHub OAuth, see `decisions/0006-github-oauth-auth.md`. Sessions vs JWTs still open
-- Schema conventions and migration tool
+- ~~Auth approach~~ decided: GitHub OAuth, see `decisions/0006-github-oauth-auth.md`. JWT sessions (`0009`), plain OAuth app (`0011`)
+- Schema conventions (open). Migration tool decided: Flyway, `decisions/0007-flyway-migrations.md`
 - Vendor registry shape (shared with Stage 2)
 
 **Exit criteria**

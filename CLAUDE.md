@@ -10,9 +10,9 @@ API changelog watcher. Watches third-party APIs a team depends on, diffs their s
 
 ## Stack (decided)
 
-- Java: API, scan service (worker), aggregator, and the rest of the backend. Built with Gradle (`docs/decisions/0001-gradle-java-build-tool.md`). Spring Boot (`docs/decisions/0005-spring-boot.md`). Auth is GitHub OAuth (`docs/decisions/0006-github-oauth-auth.md`)
+- Java: API, scan service (worker), aggregator, and the rest of the backend. Built with Gradle (`docs/decisions/0001-gradle-java-build-tool.md`). Spring Boot (`docs/decisions/0005-spring-boot.md`), latest versions, JPA (`0010`). Auth is GitHub OAuth (`0006`, plain OAuth app `0011`) with JWT (`0009`). Migrations: Flyway (`0007`)
 - Python: upstream collector only
-- Vite.js with React: frontend (`docs/decisions/0002-react-frontend-framework.md`)
+- Vite.js with React and TypeScript: frontend (`docs/decisions/0002-react-frontend-framework.md`, `0008`)
 - PostgreSQL: only database
 - RabbitMQ: scan jobs. Kafka: runtime events (stage 6, later)
 - Nginx reverse proxy, Docker
