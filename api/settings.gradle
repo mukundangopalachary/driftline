@@ -1,0 +1,6 @@
+plugins {
+	// Lets Gradle download the JDK named in build.gradle's toolchain block when it is not installed.
+	id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'api'

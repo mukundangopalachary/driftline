@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: driftline-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/driftline}
+    username: ${POSTGRES_USER:driftline}
+    password: ${POSTGRES_PASSWORD:driftline_dev}
+  jpa:
+    # Schema is owned by Flyway migrations (decisions/0007, 0013). Hibernate only checks it.
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+server:
+  # 8080 is often taken locally. Nginx proxies to this port inside Compose later.
+  port: ${API_PORT:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
