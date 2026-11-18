@@ -41,7 +41,7 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 
 **Decisions needed**
 - ~~Repo layout~~ decided: monorepo, see `decisions/0004-monorepo.md`
-- Java framework (build tool decided: Gradle, see `decisions/0001-gradle-java-build-tool.md`)
+- ~~Java framework~~ decided: Spring Boot, see `decisions/0005-spring-boot.md` (build tool: Gradle, `decisions/0001-gradle-java-build-tool.md`)
 - ~~Frontend framework on Vite~~ decided: React, see `decisions/0002-react-frontend-framework.md`
 - Hosting direction (can wait, but affects Docker choices)
 
@@ -66,7 +66,7 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 - Basic CI: build, test, lint
 
 **Decisions needed**
-- Auth approach (own accounts vs OAuth providers)
+- ~~Auth approach~~ decided: GitHub OAuth, see `decisions/0006-github-oauth-auth.md`. Sessions vs JWTs still open
 - Schema conventions and migration tool
 - Vendor registry shape (shared with Stage 2)
 

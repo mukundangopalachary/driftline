@@ -4,7 +4,7 @@
 
 ## Stack (decided)
 
-Java with Gradle (backend), Python (upstream collector), Vite.js with React (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (only database), Nginx (reverse proxy), Docker.
+Java with Gradle and Spring Boot (backend), Python (upstream collector), Vite.js with React (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (only database), Nginx (reverse proxy), Docker.
 
 ## Diagram
 
@@ -95,5 +95,4 @@ Alerts should carry a confidence label by source: declared, found in code, seen 
 - RabbitMQ consumer timeout and heartbeat for long scans
 - GitHub app webhooks to trigger rescans on push
 - Runtime collection method: SDK, log ingestion, or proxy (metadata only)
-- Java framework (Gradle and React are decided, see `decisions/`)
 - Scan target language for v1

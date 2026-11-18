@@ -10,7 +10,7 @@ API changelog watcher. Watches third-party APIs a team depends on, diffs their s
 
 ## Stack (decided)
 
-- Java: API, scan service (worker), aggregator, and the rest of the backend. Built with Gradle (`docs/decisions/0001-gradle-java-build-tool.md`). Java framework not chosen yet
+- Java: API, scan service (worker), aggregator, and the rest of the backend. Built with Gradle (`docs/decisions/0001-gradle-java-build-tool.md`). Spring Boot (`docs/decisions/0005-spring-boot.md`). Auth is GitHub OAuth (`docs/decisions/0006-github-oauth-auth.md`)
 - Python: upstream collector only
 - Vite.js with React: frontend (`docs/decisions/0002-react-frontend-framework.md`)
 - PostgreSQL: only database
