@@ -66,7 +66,7 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 - Basic CI: build, test, lint
 
 **Decisions needed**
-- ~~Auth approach~~ decided: GitHub OAuth, see `decisions/0006-github-oauth-auth.md`. JWT access tokens (1 day) with refresh tokens (30 days, Redis and Postgres), revocation and a Redis blacklist (`0009`, `0012`), plain OAuth app (`0011`). Signing: ES256 with Docker secrets (`0015`). Refresh token: opaque base64, replaced at expiry, httpOnly cookie (`0009`). CSRF token, 14-day inactivity rule, forced logout on excessive requests (`0009`). Dev keys via openssl in git-ignored `.env` (`0015`). Still open: refresh token hashing, access token browser storage, rate threshold, CSRF mechanism, key rotation
+- ~~Auth approach~~ decided: GitHub OAuth, see `decisions/0006-github-oauth-auth.md`. JWT access tokens (1 day) with refresh tokens (30 days, Redis and Postgres), revocation and a Redis blacklist (`0009`, `0012`), plain OAuth app (`0011`). Signing: ES256 with Docker secrets (`0015`). Refresh token: opaque base64, replaced at expiry, httpOnly cookie (`0009`). CSRF token, 14-day inactivity rule, forced logout on excessive requests (`0009`). Dev keys via openssl in git-ignored `.env` (`0015`). Refresh token hashed in storage, both tokens in httpOnly cookies, Spring Security CSRF, 300 req/min forced-logout limit, 7 revocation triggers (`0009`). Still open: key rotation, rate counter storage, definition of a visit
 - ~~Schema conventions~~ decided: `0013`. Migration tool: Flyway, `decisions/0007-flyway-migrations.md`
 - Vendor registry shape (shared with Stage 2)
 
