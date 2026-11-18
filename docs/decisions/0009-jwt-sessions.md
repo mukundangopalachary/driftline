@@ -69,6 +69,12 @@ The access token only lives 1 day, so by day 14 it has already expired. Blacklis
   7. Signing key compromise: rotate the ES256 key, which invalidates all access tokens (users re-authenticate or refresh).
   Not added: password change (there are no passwords), refresh token reuse detection (not applicable while tokens do not rotate on use).
 
+## Deferred and confirmed (owner)
+
+- **14-day inactivity rule: deferred.** Not built in Stage 1. Implement near the end of the project. The "visit" definition and the daily activity tracking are deferred with it. Until then, sessions end only by refresh token expiry (30 days) or another revocation trigger. The design above is kept as the intended behavior.
+- **Rate limit confirmed:** 300 authenticated requests per minute per user, then forced logout and revocation of that user's access and refresh tokens.
+- **Rate limit scope:** authenticated endpoints only. Unauthenticated endpoints get no rate limit for now. The owner will say if they want one.
+
 ## Notes
 
 - Base64 is an encoding, not protection. The token is only secure if its bytes come from a cryptographically secure random source and are long enough. The server-side hash means a database or Redis leak does not leak usable tokens.
@@ -80,5 +86,4 @@ The access token only lives 1 day, so by day 14 it has already expired. Blacklis
 - Key rotation scheme (signing is decided: ES256 with Docker secrets, see `0015-jwt-es256-docker-secrets.md`). Explained to the owner, can be deferred.
 - Where the request counter for the rate limit lives. Redis is the natural fit, but that would extend `0012-redis-token-blacklist.md` (token state only) to include rate counters, which is the owner's call. In-memory counting works while there is a single API instance.
 - How to revoke "all of a user's access tokens" (blacklist each token id, or store a per-user "tokens issued before this time are invalid" cutoff). Settled in implementation.
-- Exact definition of a "visit" for the 14-day rule (page load, authenticated API call, or refresh)
-- Whether the rate limit applies to unauthenticated endpoints (for example by IP). Not covered here.
+- Exact definition of a "visit" for the 14-day rule. Deferred with the rule itself, see below.
