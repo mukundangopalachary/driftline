@@ -17,7 +17,7 @@ When the access token has expired, the API looks up the refresh token in Redis. 
 
 ### Inactivity rule
 
-If a user has no activity for **7 days**: blacklist their current access token and expire their refresh token.
+If a user has no activity for **14 days** (changed from 7, see below): blacklist their current access token and expire their refresh token.
 
 ### Revocation
 
@@ -29,7 +29,7 @@ If Redis is down, **reject** requests (fail closed). Authenticated calls fail un
 
 ## Note on the inactivity rule
 
-The access token only lives 1 day, so by day 7 it has already expired. Blacklisting it adds nothing for the inactivity case; expiring the refresh token is what ends the session. The blacklist matters for explicit revocation (logout, forced sign-out) inside the 1-day window. Recorded as the owner stated it. If activity is measured by refresh time, a user inactive for 7 days simply never refreshed in that period.
+The access token only lives 1 day, so by day 14 it has already expired. Blacklisting it adds nothing for the inactivity case; expiring the refresh token is what ends the session. The blacklist matters for explicit revocation (logout, forced sign-out) inside the 1-day window. Recorded as the owner stated it. If activity is measured by refresh time, a user inactive for 14 days simply never refreshed in that period.
 
 ## Decided later the same day (owner)
 
