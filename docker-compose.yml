@@ -1,0 +1,30 @@
+# Stage 0 scaffold: Postgres and Nginx only.
+# Layout-agnostic: lives at repo root, works whether services end up in a monorepo or elsewhere.
+# Repo layout, Java build tool, and frontend framework are still open (see docs/plan.md).
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-driftline}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-driftline_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-driftline}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  nginx:
+    image: nginx:1.27
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    # No upstreams yet: frontend and API do not exist (Stage 1).
+
+volumes:
+  pgdata:
