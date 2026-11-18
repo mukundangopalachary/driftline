@@ -35,13 +35,13 @@ flowchart LR
     MATCH[/Impact matcher<br/>TBD/]
     NOTIFY[/Notifier<br/>TBD/]
     PG[(PostgreSQL)]
-    REDIS[(Redis<br/>JWT blacklist)]
+    REDIS[(Redis<br/>token state)]
     VENDOR([Third-party API vendors<br/>specs, changelogs])
 
     User --> NGINX --> UI
     NGINX --> API
     UI -. calls .-> API
-    API -- "revoked tokens" --> REDIS
+    API -- "blacklist, refresh cache" --> REDIS
 
     %% Input paths (hybrid)
     API -- "1 Declare: write directly" --> PG
