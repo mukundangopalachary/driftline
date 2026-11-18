@@ -46,7 +46,7 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 **Exit criteria**
 - ~~At least 3 people describe a real incident or near-miss~~ Skipped
 - ~~At least 1 alert from the manual pilot was acted on~~ Skipped
-- `docker compose up` brings up Postgres and Nginx (files written, not yet run; needs Docker compose plugin and daemon)
+- `docker compose up` brings up Postgres and Nginx. Verified 2026-11-18: Postgres healthy, Nginx `/healthz` returns 200 on host port 8081 (8080 was taken by another local container)
 
 **Risks:** Skipping validation because building feels more productive. The owner chose to skip it (`decisions/0003-skip-stage-0-validation.md`).
 
