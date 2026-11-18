@@ -23,7 +23,7 @@ One repository holding all services. Each service in its own top-level folder:
 
 ## Not decided here
 
-- Gradle multi-module layout across the Java services (separate builds vs one root build)
+- Gradle multi-module layout across the Java services. `api/` is currently a standalone Gradle build with its own wrapper. Revisit when `scan/` and `aggregator/` are added (separate builds vs one root build)
 - Where the impact matcher and notifier live (open in `architecture.md`; no folders created for them)
 - Where shared things go (migrations, vendor registry), if anywhere
 - CI layout

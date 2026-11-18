@@ -31,6 +31,10 @@ Practical notes (not decisions):
 - Docker Compose reads `.env` natively and can pass values to containers as environment variables. Running a service outside Docker needs a loader (for example a Spring config import of the `.env` file, or a dotenv library).
 - Environment variables are easier to leak (process dumps, logs) than mounted secret files. That is why dev only.
 
+## Key rotation (owner): manual swap
+
+Rotation is a manual swap: replace the key pair and restart the API. All existing access tokens then fail verification and clients get a new one through the refresh flow. Users are not logged out, because refresh tokens are stored server-side and do not depend on the signing key. No `kid` or key overlap for now. Revisit if scheduled or zero-disruption rotation is needed.
+
 ## Not decided here
 
 - Key rotation scheme (`kid`, JWKS endpoint, overlap period)

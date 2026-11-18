@@ -25,10 +25,14 @@ Redis is for token state and rate limiting only: the blacklist, the refresh-toke
 
 ## Not decided here
 
-- Redis version and exact persistence mode
+- Redis version policy beyond the first pick: `redis:8` (latest major on Docker Hub, 2026-11-18)
 - Stage when Redis enters Docker Compose (expected Stage 1, when `api/` is scaffolded)
 - Whether Redis in production is self-hosted or managed (hosting is open)
 
 ## Amended later the same day (owner): rate-limit counters
 
 Redis also stores the per-user request counters for the rate limit in `0009`. Counters are short-lived (one-minute windows) and need no persistence beyond what is already set for the blacklist. If Redis is down, requests are rejected, same as for token checks.
+
+## Scaffold notes (2026-11-18)
+
+Redis runs in `docker-compose.yml` as `redis:8` with `--appendonly yes` (append-only file persistence) and a named volume, so the blacklist survives restarts. Verified: `appendonly yes`, `PONG`, healthy. How well AOF fits (fsync policy, data loss window) is not tuned. Default `everysec` applies.

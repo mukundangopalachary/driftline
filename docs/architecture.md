@@ -89,6 +89,7 @@ Alerts should carry a confidence label by source: declared, found in code, seen 
 
 ## Open (owner decides)
 
+- Postgres image version: compose and tests use `postgres:16`, picked in Stage 0 without checking. Postgres 18 is the latest major on Docker Hub. Moving changes the data directory layout, so decide before real data exists
 - Upstream collector internals: source registry format, scheduler, which source tiers first, how LLM extraction is gated by confidence
 - How the Python collector hands data to the Java side (direct Postgres writes vs queue vs API)
 - Whether impact matcher and notifier are separate services or part of the API
