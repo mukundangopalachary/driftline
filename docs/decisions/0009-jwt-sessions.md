@@ -84,6 +84,6 @@ The access token only lives 1 day, so by day 14 it has already expired. Blacklis
 ## Not decided here
 
 - Key rotation scheme (signing is decided: ES256 with Docker secrets, see `0015-jwt-es256-docker-secrets.md`). Explained to the owner, can be deferred.
-- Where the request counter for the rate limit lives. Redis is the natural fit, but that would extend `0012-redis-token-blacklist.md` (token state only) to include rate counters, which is the owner's call. In-memory counting works while there is a single API instance.
+- ~~Where the request counter for the rate limit lives~~ decided: Redis, see `0012-redis-token-blacklist.md`
 - How to revoke "all of a user's access tokens" (blacklist each token id, or store a per-user "tokens issued before this time are invalid" cutoff). Settled in implementation.
 - Exact definition of a "visit" for the 14-day rule. Deferred with the rule itself, see below.

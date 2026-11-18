@@ -15,7 +15,7 @@ The earlier rule asked for a measured problem first. The owner chose Redis up fr
 
 ## Scope
 
-Redis is for token state only: the blacklist and the refresh-token cache (see below). Any other use needs its own decision. It is not a general cache.
+Redis is for token state and rate limiting only: the blacklist, the refresh-token cache, and the per-user request counters for the 300 requests per minute limit (see `0009-jwt-sessions.md`). Any other use needs its own decision. It is not a general cache.
 
 ## Decided later the same day (owner)
 
@@ -28,3 +28,7 @@ Redis is for token state only: the blacklist and the refresh-token cache (see be
 - Redis version and exact persistence mode
 - Stage when Redis enters Docker Compose (expected Stage 1, when `api/` is scaffolded)
 - Whether Redis in production is self-hosted or managed (hosting is open)
+
+## Amended later the same day (owner): rate-limit counters
+
+Redis also stores the per-user request counters for the rate limit in `0009`. Counters are short-lived (one-minute windows) and need no persistence beyond what is already set for the blacklist. If Redis is down, requests are rejected, same as for token checks.
