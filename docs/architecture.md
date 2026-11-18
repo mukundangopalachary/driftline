@@ -4,7 +4,7 @@
 
 ## Stack (decided)
 
-Java with Gradle and Spring Boot (backend), Python (upstream collector), Vite.js with React and TypeScript (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (main database), Redis (JWT blacklist only, `decisions/0012-redis-token-blacklist.md`), Nginx (reverse proxy), Docker.
+Java with Gradle and Spring Boot (backend), Python (upstream collector), Vite.js with React and TypeScript (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (main database), Redis (token state only: JWT blacklist and refresh-token cache, `decisions/0012-redis-token-blacklist.md`), Nginx (reverse proxy), Docker.
 
 ## Diagram
 

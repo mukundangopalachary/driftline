@@ -66,7 +66,7 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 - Basic CI: build, test, lint
 
 **Decisions needed**
-- ~~Auth approach~~ decided: GitHub OAuth, see `decisions/0006-github-oauth-auth.md`. JWT sessions with refresh, revocation and a Redis blacklist (`0009`, `0012`), plain OAuth app (`0011`). JWT details (lifetimes, refresh storage, browser storage, signing) still open
+- ~~Auth approach~~ decided: GitHub OAuth, see `decisions/0006-github-oauth-auth.md`. JWT access tokens (1 day) with refresh tokens (30 days, Redis and Postgres), revocation and a Redis blacklist (`0009`, `0012`), plain OAuth app (`0011`). Still open: signing algorithm and keys, refresh rotation, browser token storage
 - ~~Schema conventions~~ decided: `0013`. Migration tool: Flyway, `decisions/0007-flyway-migrations.md`
 - Vendor registry shape (shared with Stage 2)
 

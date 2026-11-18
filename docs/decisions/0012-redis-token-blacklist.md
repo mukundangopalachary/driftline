@@ -15,11 +15,16 @@ The earlier rule asked for a measured problem first. The owner chose Redis up fr
 
 ## Scope
 
-Redis is for the token blacklist only. Any other use needs its own decision. It is not a general cache yet.
+Redis is for token state only: the blacklist and the refresh-token cache (see below). Any other use needs its own decision. It is not a general cache.
+
+## Decided later the same day (owner)
+
+- The blacklist **survives Redis restarts**. Needs Redis persistence turned on (AOF or snapshots); the exact setting is an implementation detail to pick when Redis is added to Compose.
+- If Redis is down, requests are **rejected** (fail closed).
+- Redis also holds cached refresh tokens (lookup order: Redis, then Postgres), see `0009-jwt-sessions.md`. This widens the scope above from "blacklist only" to "blacklist and refresh-token cache".
 
 ## Not decided here
 
-- Redis version, persistence settings (what happens to the blacklist on Redis restart)
-- Behavior when Redis is down (reject all tokens, or accept unchecked)
+- Redis version and exact persistence mode
 - Stage when Redis enters Docker Compose (expected Stage 1, when `api/` is scaffolded)
 - Whether Redis in production is self-hosted or managed (hosting is open)
