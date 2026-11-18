@@ -4,7 +4,7 @@
 
 ## Stack (decided)
 
-Java (backend), Vite.js (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (only database), Nginx (reverse proxy), Docker.
+Java (backend), Python (upstream collector), Vite.js (frontend), RabbitMQ (job queue), Kafka (runtime event stream), PostgreSQL (only database), Nginx (reverse proxy), Docker.
 
 ## Diagram
 
@@ -29,7 +29,7 @@ flowchart LR
     end
 
     subgraph Change["Change side (upstream)"]
-        COLLECT[/Upstream collector<br/>TBD/]
+        COLLECT[Upstream collector<br/>Python]
     end
 
     MATCH[/Impact matcher<br/>TBD/]
@@ -61,7 +61,7 @@ flowchart LR
     MATCH --> NOTIFY
 
     classDef tbd stroke-dasharray: 5 5;
-    class COLLECT,MATCH,NOTIFY tbd;
+    class MATCH,NOTIFY tbd;
 ```
 
 ## Data flow by input path
@@ -81,13 +81,14 @@ Alerts should carry a confidence label by source: declared, found in code, seen 
 | API | Auth, projects, declare, enqueue scans, serve UI data | HTTP | Postgres, RabbitMQ |
 | Scan service (worker) | Clone and statically analyze repos | RabbitMQ | Postgres |
 | Aggregator | Roll up runtime call metadata | Kafka | Postgres |
-| Upstream collector (TBD) | Fetch and diff vendor specs and changelogs | Vendor sources | Postgres |
+| Upstream collector (Python) | Fetch and diff vendor specs and changelogs, extract and classify changes | Vendor sources | Postgres |
 | Impact matcher (TBD) | Join usage with changes to produce alerts | Postgres | Postgres |
 | Notifier (TBD) | Send alerts (email, Slack, etc.) | Alerts | External channels |
 
 ## Open (owner decides)
 
-- Upstream collector design and where it sits (scheduler, queue, output shape)
+- Upstream collector internals: source registry format, scheduler, which source tiers first, how LLM extraction is gated by confidence
+- How the Python collector hands data to the Java side (direct Postgres writes vs queue vs API)
 - Whether impact matcher and notifier are separate services or part of the API
 - Scan worker safety limits: clone size, timeouts, read-only handling of untrusted repos
 - Idempotency of repeated scans of the same repo
