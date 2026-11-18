@@ -1,6 +1,9 @@
 spring:
   application:
     name: driftline-api
+  config:
+    # Local dev: load the git-ignored .env at the repo root (decisions/0015). Ignored when absent.
+    import: optional:file:../.env[.properties]
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/driftline}
     username: ${POSTGRES_USER:driftline}
@@ -16,10 +19,21 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID:unset}
+            client-secret: ${GITHUB_CLIENT_SECRET:unset}
+            scope: read:user
+            redirect-uri: "{baseUrl}/api/auth/oauth2/callback/{registrationId}"
 
 server:
   # 8080 is often taken locally. Nginx proxies to this port inside Compose later.
   port: ${API_PORT:8082}
+  # Behind a proxy (Vite dev server, Nginx) build redirect URLs from X-Forwarded-* headers.
+  forward-headers-strategy: framework
 
 management:
   endpoints:
@@ -30,3 +44,18 @@ management:
     health:
       probes:
         enabled: true
+
+driftline:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  jwt:
+    # base64 of a PEM, one line. Generate with scripts/gen-dev-keys.sh (decisions/0015).
+    private-key-b64: ${JWT_PRIVATE_KEY_B64:}
+    public-key-b64: ${JWT_PUBLIC_KEY_B64:}
+    issuer: driftline
+    access-ttl: 1d
+  refresh-ttl: 30d
+  cookie:
+    # Browsers accept Secure cookies on http://localhost. Set COOKIE_SECURE=false only if yours does not.
+    secure: ${COOKIE_SECURE:true}
+  rate-limit:
+    requests-per-minute: 300
