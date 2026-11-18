@@ -30,6 +30,7 @@ API changelog watcher. Watches third-party APIs a team depends on, diffs their s
 
 - Infra: `docker compose up -d` (Postgres 5432, Redis 6379, Nginx on host 8081). `docker compose down` stops it, volumes kept
 - Dev keys: `scripts/gen-dev-keys.sh` writes ES256 keys into git-ignored `.env`. Copy `.env.example` to `.env` for other values
+- GitHub login needs an OAuth app: setup in `docs/decisions/0011-plain-github-oauth-app.md`, then set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` in `.env`
 - API: `cd api && ./gradlew test` (needs Docker, uses Testcontainers), `./gradlew bootRun` (port 8082, needs compose up)
 - Web: `cd web && pnpm install`, `pnpm dev` (5173, proxies `/api` to 8082), `pnpm test`, `pnpm build`, `pnpm lint`. pnpm via Corepack: `corepack enable pnpm`
 

@@ -22,3 +22,7 @@
 - Specific tables (written in the Stage 1 and 2 migrations)
 - Multi-tenancy model beyond project ownership
 - Retention and deletion policy (Stage 5)
+
+## Applied (2026-11-18)
+
+`api/src/main/resources/db/migration/V1__users_and_refresh_tokens.sql` follows these conventions: UUID keys with `gen_random_uuid()`, `timestamptz`, named `pk_`, `uq_`, `fk_` constraints, an index on the foreign key (`ix_` prefix for plain indexes, added here as a naming choice). `refresh_tokens` references `users` with `on delete cascade`, a deliberate rule so deleting a user removes their tokens.

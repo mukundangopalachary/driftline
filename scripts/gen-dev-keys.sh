@@ -8,7 +8,10 @@ cd "$(dirname "$0")/.."
 ENV_FILE=".env"
 touch "$ENV_FILE"
 
-if grep -q '^JWT_PRIVATE_KEY_B64=' "$ENV_FILE"; then
+# A copy of .env.example has blank JWT_ lines. Drop those so they do not count as existing keys.
+sed -i '/^JWT_\(PRIVATE\|PUBLIC\)_KEY_B64=$/d' "$ENV_FILE"
+
+if grep -q '^JWT_PRIVATE_KEY_B64=.' "$ENV_FILE"; then
   echo "JWT keys already in $ENV_FILE. Remove the JWT_* lines first to rotate." >&2
   exit 1
 fi

@@ -56,7 +56,7 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 
 ## Stage 1: Core skeleton
 
-> Progress 2026-11-18: `api/` and `web/` scaffolded and verified (builds, tests pass, API boots against compose, dev proxy works). Redis in compose. Not built yet: GitHub OAuth login, JWT flow, Postgres schema v1 (users, projects, vendors, declared usage), the declare screen, Nginx routing to API and web, CI.
+> Progress 2026-11-18: `api/` and `web/` scaffolded and verified. **Auth flow built**: GitHub OAuth login, ES256 JWT access tokens and refresh tokens in httpOnly cookies, CSRF, revocation and blacklist in Redis, rate limit, logout and logout-all, plus the frontend sign-in, sign-out and silent refresh. 32 API tests and 10 web tests pass. Not yet run against real GitHub (needs the owner's OAuth app, see `decisions/0011`). Not built yet: Postgres schema for projects, vendors and declared usage, the declare screen, Nginx routing to API and web, CI.
 
 **Goal:** A logged-in user can create a project and declare the APIs and versions they use.
 

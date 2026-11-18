@@ -85,5 +85,43 @@ The access token only lives 1 day, so by day 14 it has already expired. Blacklis
 
 - Key rotation scheme (signing is decided: ES256 with Docker secrets, see `0015-jwt-es256-docker-secrets.md`). Explained to the owner, can be deferred.
 - ~~Where the request counter for the rate limit lives~~ decided: Redis, see `0012-redis-token-blacklist.md`
-- How to revoke "all of a user's access tokens" (blacklist each token id, or store a per-user "tokens issued before this time are invalid" cutoff). Settled in implementation.
 - Exact definition of a "visit" for the 14-day rule. Deferred with the rule itself, see below.
+
+## Implemented (2026-11-18)
+
+What the code in `api/` does, including choices made while building it.
+
+**Tokens and cookies**
+- Access token: ES256 JWT with `iss`, `sub` (user id), `jti`, `iat`, `exp` (1 day). Cookie `access_token`, path `/`.
+- Refresh token: 32 random bytes, base64url without padding (URL-safe base64). Cookie `refresh_token`, path `/api/auth` only. Stored as a SHA-256 hash in Postgres (`refresh_tokens`) and Redis. Lifetime 30 days.
+- Both cookies: `HttpOnly`, `SameSite=Lax`, `Secure` (set `COOKIE_SECURE=false` only if a browser refuses Secure on http://localhost).
+- Only ES256 is accepted. Tokens signed with another key, expired, tampered, or unsigned (`alg: none`) are rejected. The Authorization header is not accepted.
+
+**Endpoints** (`/api/auth`)
+- `GET /me` current user. `POST /refresh` new access token from the refresh cookie. `POST /logout` this browser. `POST /logout-all` every token of this user.
+- All POSTs need the CSRF header (`X-XSRF-TOKEN` copied from the `XSRF-TOKEN` cookie). Spring's CSRF protection with the cookie repository and the plain request handler (the default XOR handler would stop the frontend reading the value).
+- `refresh` and `logout` do not read the access token, so an expired cookie cannot block them.
+
+**Revocation** (resolves the open question on revoking all of a user's tokens)
+- Single token: blacklist its `jti` in Redis until it would expire anyway.
+- All of a user's tokens: store a per-user cutoff time in Redis. Access tokens issued at or before it are invalid. Refresh tokens are deleted from Postgres and Redis. The cutoff entry lives 1 day plus 5 minutes.
+- Edge case: a token issued in the same second as the revoke counts as revoked (safe side). A real login takes longer than a second.
+
+**Rate limit**
+- 300 authenticated requests per minute per user, fixed one-minute windows, counter in Redis. Over the limit: revoke all of the user's tokens, clear the cookies, answer 401. Unauthenticated endpoints are not limited.
+- A burst across a window boundary can count up to twice the limit briefly.
+
+**Redis down**
+- Token validation: the token is rejected (401). Rate limit filter, refresh and logout: 503. Postgres is not used as a fallback.
+
+**Redis keys:** `refresh:<sha256>`, `jwt:blacklist:<jti>`, `jwt:revoked-before:<userId>`, `rl:<userId>:<minute>`.
+
+**One deviation from "stateless"**
+- The GitHub login handshake keeps its `state` value in a short-lived server session (Spring's default). The success handler invalidates it, and the request cache is switched off so nothing else creates a session. Tests check that ordinary requests never create one. This needs sticky sessions or a shared session store only if the API runs as several instances during a login. Single instance for now.
+
+**Not built yet**
+- 14-day inactivity rule (deferred by the owner).
+- Account deletion endpoint (the foreign key already cascades to refresh tokens, and the revoke-all call exists).
+- Manual revoke tool for the operator.
+- Purging expired refresh token rows from Postgres. They stay until the user logs out. Harmless for now, add a scheduled cleanup later.
+- Unauthenticated rate limits (owner will ask).
