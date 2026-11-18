@@ -23,6 +23,7 @@ API changelog watcher. Watches third-party APIs a team depends on, diffs their s
 - Runtime path uses a separate aggregator service, not the scan service
 - CVE catalog is a non-goal
 - Postgres only. No second datastore until a measured problem needs one
+- Monorepo, one folder per service: `api/`, `scan/`, `aggregator/`, `collector/`, `web/`. Compose and `nginx/` at root (`docs/decisions/0004-monorepo.md`)
 
 ## Working rules
 

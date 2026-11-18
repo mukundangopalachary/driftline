@@ -29,16 +29,18 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 
 ## Stage 0: Validate and scaffold
 
+> Status: CLOSED 2026-11-18. Validation skipped by owner (`decisions/0003-skip-stage-0-validation.md`). Scaffold done and verified. Hosting direction still open, can wait.
+
 **Goal:** Confirm the pain is real and set up a place to build.
 
 **Work**
 - ~~Run the validation plan in `product.md`: list 10 contacts, talk to at least 5, ask for a recent API-change incident.~~ Skipped, see `decisions/0003-skip-stage-0-validation.md`.
 - Check for direct competitors in this niche. Done, see `competitors.md`.
 - ~~Manual pilot: hand-watch about 5 APIs for one friendly team for 2 weeks and see if alerts get acted on.~~ Skipped, see `decisions/0003-skip-stage-0-validation.md`.
-- Scaffold: monorepo or multi-repo layout (owner decides), Docker Compose with Postgres and Nginx.
+- Scaffold: monorepo (decided, `decisions/0004-monorepo.md`), Docker Compose with Postgres and Nginx. Done.
 
 **Decisions needed**
-- Repo layout
+- ~~Repo layout~~ decided: monorepo, see `decisions/0004-monorepo.md`
 - Java framework (build tool decided: Gradle, see `decisions/0001-gradle-java-build-tool.md`)
 - ~~Frontend framework on Vite~~ decided: React, see `decisions/0002-react-frontend-framework.md`
 - Hosting direction (can wait, but affects Docker choices)
