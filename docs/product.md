@@ -121,6 +121,8 @@ Direct competitors exist for the change-watching half (changelog and spec monito
 
 ## Validation plan
 
+> SKIPPED by owner decision, see `decisions/0003-skip-stage-0-validation.md`. Kept for reference.
+
 Before building much:
 
 1. List 10 teams or developers you could talk to.

@@ -1,5 +1,7 @@
 # Validation kit (Stage 0)
 
+> SKIPPED by owner decision, see `../decisions/0003-skip-stage-0-validation.md`. Kept unused in case it is revisited.
+
 Tools for the validation plan in `../product.md`. Owner runs the conversations and the pilot. Nothing here is filled in yet.
 
 Exit criteria this serves (from `../plan.md`):

@@ -32,9 +32,9 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 **Goal:** Confirm the pain is real and set up a place to build.
 
 **Work**
-- Run the validation plan in `product.md`: list 10 contacts, talk to at least 5, ask for a recent API-change incident.
-- Check for direct competitors in this niche.
-- Manual pilot: hand-watch about 5 APIs for one friendly team for 2 weeks and see if alerts get acted on.
+- ~~Run the validation plan in `product.md`: list 10 contacts, talk to at least 5, ask for a recent API-change incident.~~ Skipped, see `decisions/0003-skip-stage-0-validation.md`.
+- Check for direct competitors in this niche. Done, see `competitors.md`.
+- ~~Manual pilot: hand-watch about 5 APIs for one friendly team for 2 weeks and see if alerts get acted on.~~ Skipped, see `decisions/0003-skip-stage-0-validation.md`.
 - Scaffold: monorepo or multi-repo layout (owner decides), Docker Compose with Postgres and Nginx.
 
 **Decisions needed**
@@ -44,11 +44,11 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 - Hosting direction (can wait, but affects Docker choices)
 
 **Exit criteria**
-- At least 3 people describe a real incident or near-miss
-- At least 1 alert from the manual pilot was acted on
-- `docker compose up` brings up Postgres and Nginx
+- ~~At least 3 people describe a real incident or near-miss~~ Skipped
+- ~~At least 1 alert from the manual pilot was acted on~~ Skipped
+- `docker compose up` brings up Postgres and Nginx (files written, not yet run; needs Docker compose plugin and daemon)
 
-**Risks:** Skipping validation because building feels more productive.
+**Risks:** Skipping validation because building feels more productive. The owner chose to skip it (`decisions/0003-skip-stage-0-validation.md`).
 
 ---
 
