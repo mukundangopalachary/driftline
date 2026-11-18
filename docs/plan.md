@@ -39,8 +39,8 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 
 **Decisions needed**
 - Repo layout
-- Java framework and build tool
-- Frontend framework on Vite
+- Java framework (build tool decided: Gradle, see `decisions/0001-gradle-java-build-tool.md`)
+- ~~Frontend framework on Vite~~ decided: React, see `decisions/0002-react-frontend-framework.md`
 - Hosting direction (can wait, but affects Docker choices)
 
 **Exit criteria**
@@ -241,4 +241,4 @@ Stages 0 and 1 can overlap. Stage 6 is deliberately late and optional until user
 - Scan worker safety limits and idempotency
 - RabbitMQ consumer timeout and heartbeat for long scans
 - Runtime collection method
-- Frontend framework, first scan language
+- First scan language

@@ -10,9 +10,9 @@ API changelog watcher. Watches third-party APIs a team depends on, diffs their s
 
 ## Stack (decided)
 
-- Java: API, scan service (worker), aggregator, and the rest of the backend
+- Java: API, scan service (worker), aggregator, and the rest of the backend. Built with Gradle (`docs/decisions/0001-gradle-java-build-tool.md`). Java framework not chosen yet
 - Python: upstream collector only
-- Vite.js: frontend (framework not chosen yet)
+- Vite.js with React: frontend (`docs/decisions/0002-react-frontend-framework.md`)
 - PostgreSQL: only database
 - RabbitMQ: scan jobs. Kafka: runtime events (stage 6, later)
 - Nginx reverse proxy, Docker
