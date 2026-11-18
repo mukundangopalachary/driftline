@@ -98,7 +98,7 @@ Verify all of this before relying on it. It is from memory and the space changes
 | Vendor changelog feeds / email | Per-vendor RSS, newsletters                    | Manual, scattered, no impact mapping            |
 | Uptime and synthetic monitors  | Status and monitoring platforms                | Detect outages, not upcoming breaking changes   |
 
-Status of competition in this exact niche is unknown to me. Check for direct competitors before committing.
+Direct competitors exist for the change-watching half (changelog and spec monitors with Slack and webhook alerts). No tool was found that maps changes to the customer's own usage. Details, sources, and caveats in `competitors.md`. Still unverified by hands-on trial.
 
 ## Risks
 
