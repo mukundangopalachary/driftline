@@ -38,6 +38,13 @@ The access token only lives 1 day, so by day 7 it has already expired. Blacklist
 - **Browser storage of the refresh token:** an httpOnly cookie. Should also be `Secure`, `SameSite`, and scoped to the refresh endpoint path (Claude's recommendation, not yet owner-confirmed). A cookie needs CSRF protection on the refresh endpoint.
 - **Rate-limit revocation:** if a user sends too many requests, log them out and revoke their tokens (blacklist the access token, expire the refresh token). "Revoke" means that user's tokens, not the ES256 signing key.
 
+## Confirmed and changed later the same day (owner)
+
+- **Inactivity window is 14 days, not 7.** Reason: a user may review the code once every couple of weeks. This replaces the 7-day rule above. After 14 days with no activity: blacklist the current access token and expire the refresh token.
+- **What counts as activity:** the user visiting the site. One visit per day is enough to count (daily granularity is fine, no need to track every request).
+- **Rate-limit revocation confirmed:** revoke the user's access token and refresh token (not the signing key).
+- **Cookie:** httpOnly confirmed. A **CSRF token** is also used.
+
 ## Notes
 
 - Base64 is an encoding, not protection. The token is only secure if its bytes come from a cryptographically secure random source and are long enough. Whether the stored copy in Postgres and Redis is hashed is not decided (hashing means a database leak does not leak usable tokens).
@@ -50,6 +57,6 @@ The access token only lives 1 day, so by day 7 it has already expired. Blacklist
 - Whether stored refresh tokens are hashed
 - Where the browser keeps the access token (memory, cookie, other)
 - Request-rate threshold and window for forced logout
-- What counts as "activity" for the 7-day rule (any API call vs refresh only)
+- Exact definition of a "visit" for the 14-day rule (page load, authenticated API call, or refresh)
 - Other revocation triggers (logout, user deletion, suspected compromise)
-- How dev keys are generated and kept out of git (see `0015-jwt-es256-docker-secrets.md`)
+- CSRF token mechanism (double-submit cookie, Spring Security default, or other)
